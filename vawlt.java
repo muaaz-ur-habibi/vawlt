@@ -1,5 +1,9 @@
 import javax.swing.*;
+//import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableModel;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.io.File;
 import java.util.Base64;
@@ -53,6 +57,7 @@ public class vawlt {
         JPanel heading_panel = new JPanel();
         Image img = new ImageIcon("assets/vawlt-heading.png").getImage();
         heading_panel.add(new JLabel(new ImageIcon(img)));
+        heading_panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, heading_panel.getMinimumSize().height));
         main.add(heading_panel);
 
         main.setLayout(new BoxLayout(main.getContentPane(), BoxLayout.Y_AXIS));
@@ -174,7 +179,27 @@ public class vawlt {
     }
 
     static void GenerateUI(JFrame root) {
+        String[] col_names = {"Site/App", "Username", "Password", "Encypt/Decrypt"};
 
+        DefaultTableModel tableModel = new DefaultTableModel(col_names, 0);
+        JTable passwords_table = new JTable(tableModel);
+        JScrollPane table_scrollpane = new JScrollPane(passwords_table);
+
+        passwords_table.getColumnModel().getColumn(0).setMinWidth(200);
+        passwords_table.getColumnModel().getColumn(1).setMinWidth(150);
+        passwords_table.getColumnModel().getColumn(2).setMinWidth(300);
+
+        JPanel table_panel = new JPanel();
+        table_panel.add(table_scrollpane);
+        table_panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        
+        table_panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 250));
+
+        table_scrollpane.setBorder(BorderFactory.createLineBorder(Color.RED));
+        table_scrollpane.setPreferredSize(new Dimension(root.getWidth()-30, 240));
+        passwords_table.setPreferredSize(new Dimension(table_scrollpane.getWidth(), table_scrollpane.getHeight()));
+
+        root.add(table_panel);
     }
 
     public static void main(String[] args) {
@@ -189,6 +214,8 @@ public class vawlt {
         } else { // else prompt for the vawlt key they have
             PromptForSecretKey(root);
         }
+
+        GenerateUI(root);
 
         root.setVisible(true);
         root.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
