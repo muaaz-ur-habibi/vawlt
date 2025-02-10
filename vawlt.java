@@ -179,6 +179,7 @@ public class vawlt {
     }
 
     static void GenerateUI(JFrame root) {
+        // CREATE TABLE
         String[] col_names = {"Site/App", "Username", "Password", "Encypt/Decrypt"};
 
         DefaultTableModel tableModel = new DefaultTableModel(col_names, 0);
@@ -198,6 +199,7 @@ public class vawlt {
         table_scrollpane.setBorder(BorderFactory.createLineBorder(Color.RED));
         table_scrollpane.setPreferredSize(new Dimension(root.getWidth()-30, 240));
         passwords_table.setPreferredSize(new Dimension(table_scrollpane.getWidth(), table_scrollpane.getHeight()));
+        //END CREATE TABLE
 
         root.add(table_panel);
     }
